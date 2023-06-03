@@ -1,9 +1,6 @@
-const { response } = require("express");
-
-// GET ALL NECESSARY FROM THE DOM
 const app = document.querySelector(".weather-app");
 const temp = document.querySelector(".temp");
-const dateOutput = document.querySelector("date");
+const dateOutput = document.querySelector(".date");
 const timeOutput = document.querySelector(".time");
 const conditionOutput = dateOutput.querySelector(".condition");
 const nameOutput = document.querySelector(".name");
@@ -11,19 +8,17 @@ const icon = document.querySelector(".icon");
 const cloudOutput = document.querySelector(".cloud");
 const humidityOutput = document.querySelector(".humidity");
 const windOutput = document.querySelector(".wind");
-const form = document.querySelector(".locationInput");
+const form = document.getElementById("locationInput");
 const search = document.querySelector(".search");
 const btn = document.querySelector(".submit");
-const cities = document.querySelector(".city");
+const cities = document.querySelectorAll(".city");
 
-// DEFAULT CITY WHEN THE PAGE LEADS
 let cityInput = "London";
 
-//add click event to each city in the panel
 cities.forEach((city) => {
   city.addEventListener("click", (e) => {
     //change from default city to the clicked one
-    cityInput = e.innerHTML;
+    cityInput = e.target.innerHTML;
     //function that fetches and display all the data from weather API
     fetchWeatherData();
     app.style.opacity = "0";
@@ -56,8 +51,9 @@ function dayOfTheWeek(day, month, year) {
 }
 
 function fetchWeatherData() {
+  console.log("its work");
   fetch(
-    `http://apiweatherapi.com/v1/current.json?key=51d4fc8d9ce84966a7c43544230306=${cityInput}`
+    `http://api.weatherapi.com/v1/current.json?key=51d4fc8d9ce84966a7c43544230306&q=${cityInput}&aqi=no`
   )
     .then((response) => response.json())
     .then((data) => {
@@ -69,11 +65,11 @@ function fetchWeatherData() {
       const m = parseInt(date.substr(5, 2));
       const d = parseInt(date.substr(8, 2));
       const time = date.substr(11);
-
       dateOutput.innerHTML = `${dayOfTheWeek(d, m, y)} ${d}, ${m}, ${y}`;
-      nameOutput.innerHTML = date.location.name;
+      timeOutput.innerHTML = time;
+      nameOutput.innerHTML = data.location.name;
       const iconId = data.current.condition.icon.substr(
-        "//cdn.weatherapi..com/weather/64x64/".length
+        "//cdn.weatherapi.com/weather/64x64/".length
       );
       icon.src = "./icons/" + iconId;
       cloudOutput.innerHTML = data.current.cloud + "%";
@@ -87,6 +83,10 @@ function fetchWeatherData() {
       if (code == 1000) {
         app.style.backgroudImge = `url(./images/${timeOfDay}/clear.jpg)`;
         btn.style.backgroud = "#e5ba92";
+
+        if (timeOfDay == "night") {
+          btn.style.backgroud = "#181e27";
+        }
       } else if (
         code == 1003 ||
         code == 1006 ||
@@ -106,8 +106,7 @@ function fetchWeatherData() {
         if (timeOfDay == "night") {
           btn.style.backgroud = "#181e27";
         }
-      } //////
-      else if (
+      } else if (
         code == 1063 ||
         code == 1069 ||
         code == 1072 ||
@@ -140,12 +139,12 @@ function fetchWeatherData() {
         }
       }
       app.style.opacity = "1";
-    })
-    .catch(() => {
-      alert(`city not found , please try again`);
-      app.style.opacity = "1";
     });
-
-  fetchWeatherData();
-  app.style.opacity = "1";
+  // .catch(() => {
+  //   alert(`city not found , please try again`);
+  //   app.style.opacity = "1";
+  // });
 }
+
+fetchWeatherData();
+app.style.opacity = "1";
