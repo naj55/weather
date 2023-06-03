@@ -117,7 +117,7 @@ h1, h3{
 }
 
 .search{
-    background-color: none;
+    background: none;
     border: none;
     border-bottom: 1px #ccc solid;
     padding: 0 1em 0.5em 0;
