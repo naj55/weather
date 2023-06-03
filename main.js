@@ -157,11 +157,11 @@ function fetchWeatherData() {
         }
       }
       app.style.opacity = "1";
+    })
+    .catch((err) => {
+      console.log(err);
+      app.style.opacity = "1";
     });
-  // .catch(() => {
-  //   alert(`city not found , please try again`);
-  //   app.style.opacity = "1";
-  // });
 }
 
 fetchWeatherData();
