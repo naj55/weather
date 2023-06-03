@@ -1,8 +1,9 @@
-const app = document.querySelector(".weather-app");
+const app1 = document.querySelector(".weather-app");
+const app = document.getElementById("app");
 const temp = document.querySelector(".temp");
 const dateOutput = document.querySelector(".date");
 const timeOutput = document.querySelector(".time");
-const conditionOutput = dateOutput.querySelector(".condition");
+const conditionOutput = document.querySelector(".condition");
 const nameOutput = document.querySelector(".name");
 const icon = document.querySelector(".icon");
 const cloudOutput = document.querySelector(".cloud");
@@ -19,6 +20,7 @@ cities.forEach((city) => {
   city.addEventListener("click", (e) => {
     //change from default city to the clicked one
     cityInput = e.target.innerHTML;
+    console.log("cityInput  " + cityInput);
     //function that fetches and display all the data from weather API
     fetchWeatherData();
     app.style.opacity = "0";
@@ -49,7 +51,6 @@ function dayOfTheWeek(day, month, year) {
   ];
   return weekday[new Date(`${day}/${month}/${year}`).getDay()];
 }
-
 function fetchWeatherData() {
   console.log("its work");
   fetch(
@@ -60,6 +61,8 @@ function fetchWeatherData() {
       console.log(data);
       temp.innerHTML = data.current.temp_c + "&#176;";
       conditionOutput.innerHTML = data.current.condition.text;
+
+      console.log(conditionOutput.innerHTML);
       const date = data.location.localtime;
       const y = parseInt(date.substr(0, 4));
       const m = parseInt(date.substr(5, 2));
@@ -81,11 +84,14 @@ function fetchWeatherData() {
         timeOfDay = "night";
       }
       if (code == 1000) {
-        app.style.backgroudImge = `url(./images/${timeOfDay}/clear.jpg)`;
-        btn.style.backgroud = "#e5ba92";
+        console.log(code);
+        console.log(timeOfDay);
+        app.style.backgroundImage = `url(./images/${timeOfDay}/clear.jpg)`;
+        console.log(app.style.backgroundImage);
+        btn.style.background = "#e5ba92";
 
         if (timeOfDay == "night") {
-          btn.style.backgroud = "#181e27";
+          btn.style.background = "#181e27";
         }
       } else if (
         code == 1003 ||
@@ -101,10 +107,13 @@ function fetchWeatherData() {
         code == 1279 ||
         code == 1282
       ) {
-        app.style.backgroudImge = `url(./images/${timeOfDay}/cloudy.jpg)`;
-        btn.style.backgroud = "#efa6d1b";
+        console.log(timeOfDay);
+        console.log(code);
+        app.style.backgroundImage = `url(/images/${timeOfDay}/cloudy.jpg)`;
+        console.log(app.style.backgroundImage);
+        btn.style.background = "#efa6d1b";
         if (timeOfDay == "night") {
-          btn.style.backgroud = "#181e27";
+          btn.style.background = "#181e27";
         }
       } else if (
         code == 1063 ||
@@ -126,16 +135,20 @@ function fetchWeatherData() {
         code == 1249 ||
         code == 1252
       ) {
-        app.style.backgroudImge = `url(./images/${timeOfDay}/rainy.jpg)`;
-        btn.style.backgroud = "#647d75";
+        console.log(timeOfDay);
+        app.style.backgroundImage = `url(./images/${timeOfDay}/rainy.jpg)`;
+        console.log(app.style.backgroundImage);
+        btn.style.background = "#647d75";
         if (timeOfDay == "night") {
-          btn.style.backgroud = "#325c80";
+          btn.style.background = "#325c80";
         }
       } else {
-        app.style.backgroudImge = `url(./images/${timeOfDay}/snow.jpg)`;
-        btn.style.backgroud = "#4d72aa";
+        console.log(timeOfDay);
+        app.style.backgroundImage = `url(./images/${timeOfDay}/snow.jpg)`;
+        console.log(app.style.backgroundImage);
+        btn.style.background = "#4d72aa";
         if (timeOfDay == "night") {
-          btn.style.backgroud = "#1b1b1b";
+          btn.style.background = "#1b1b1b";
         }
       }
       app.style.opacity = "1";
