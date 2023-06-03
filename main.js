@@ -49,7 +49,11 @@ function dayOfTheWeek(day, month, year) {
     "Friday",
     "Saturday",
   ];
-  return weekday[new Date(`${day}/${month}/${year}`).getDay()];
+  const d = new Date();
+  let dday = weekday[d.getDay()];
+  //   let dayname = weekday[new Date(`${day}/${month}/${year}`).getDay()];
+  console.log(dday);
+  return dday;
 }
 function fetchWeatherData() {
   console.log("its work");
@@ -67,6 +71,7 @@ function fetchWeatherData() {
       const y = parseInt(date.substr(0, 4));
       const m = parseInt(date.substr(5, 2));
       const d = parseInt(date.substr(8, 2));
+
       const time = date.substr(11);
       dateOutput.innerHTML = `${dayOfTheWeek(d, m, y)} ${d}, ${m}, ${y}`;
       timeOutput.innerHTML = time;
