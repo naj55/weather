@@ -114,7 +114,7 @@ function fetchWeatherData() {
       ) {
         console.log(timeOfDay);
         console.log(code);
-        app.style.backgroundImage = `url(/images/${timeOfDay}/cloudy.jpg)`;
+        app.style.backgroundImage = `url(./images/${timeOfDay}/cloud.jpg)`;
         console.log(app.style.backgroundImage);
         btn.style.background = "#efa6d1b";
         if (timeOfDay == "night") {
